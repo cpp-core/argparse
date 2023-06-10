@@ -3,11 +3,11 @@ cmake_minimum_required (VERSION 3.24 FATAL_ERROR)
 find_package(Threads REQUIRED)
 
 set(TESTS
-  timer/basic
+  argparse/basic
   )
 
 set(LIBRARIES
-  timer
+  argparse
   GTest::gtest
   Threads::Threads
   )
