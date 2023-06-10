@@ -4,9 +4,15 @@
 #include <iostream>
 #include "core/argparse/argp.h"
 
-using namespace core::argp;
+using std::cout, std::endl;
+using namespace core::argp::interface;
 
 int main(int argc, const char *argv[]) {
-    ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics");
+    ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics"));
+    opts.parse(argc, argv);
+    auto verbose = opts.get<'v'>();
+
+    if (verbose) cout << "verbose option selected" << endl;
+    else cout << "verbose option not selected" << endl;
     return 0;
 }

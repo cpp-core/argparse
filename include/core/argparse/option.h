@@ -6,7 +6,7 @@
 #include "base.h"
 #include "context.h"
 #include "error.h"
-#include "core/string/lexical_cast.h"
+#include "core/lexical_cast/lexical_cast.h"
 #include "core/mp/type_name.h"
 
 namespace core::argp
@@ -126,8 +126,8 @@ struct ArgValue : ArgBase<C>
 	if (ctx.end() or is_option(ctx.front()))
 	    throw missing_value_error(token, ctx, typeid(T));
 	
-	try { value = core::str::lexical_cast<T>(ctx.front()); }
-	catch (const core::str::lexical_cast_error& error)
+	try { value = core::lexical_cast<T>(ctx.front()); }
+	catch (const core::lexical_cast_error& error)
 	{ throw bad_value_error(token, ctx, typeid(T)); }
 
 	ctx.pop();
@@ -214,11 +214,11 @@ struct ArgValues : ArgBase<C>
 	{
 	    try
 	    {
-		auto&& v = core::str::lexical_cast<T>(ctx.front());
+		auto&& v = core::lexical_cast<T>(ctx.front());
 		function(v);
 		emplace(value, std::forward<T>(v));
 	    }
-	    catch (const core::str::lexical_cast_error& error)
+	    catch (const core::lexical_cast_error& error)
 	    { throw bad_value_error(token, ctx, typeid(T)); }
 
 	    ctx.pop();

@@ -4,8 +4,8 @@
 #include <fmt/format.h>
 #include <gtest/gtest.h>
 #include <list>
-#include "core/util/argparse/argp.h"
-#include "core/util/argparse/message.h"
+#include "core/argparse/argp.h"
+#include "core/argparse/message.h"
 
 using namespace core::argp::interface;
 namespace argp = core::argp;

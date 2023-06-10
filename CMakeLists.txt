@@ -56,26 +56,20 @@ message("-- argparse: docs ${ARGPARSE_DOCS}")
 
 # Add our dependencies
 #
+add_component(tuple)
+add_component(lexical_cast)
 
 # Build the library
 #
 set(SOURCES
-  placeholder
-  )
-
-set(ASM_SOURCES
+  base
+  context
+  error
   )
 
 set(FILES)
 foreach(SOURCE ${SOURCES})
   list(APPEND FILES "src/core/argparse/${SOURCE}.cpp")
-endforeach()
-
-foreach(SOURCE ${ASM_SOURCES})
-  set(FILE "src/words/${CMAKE_SYSTEM_PROCESSOR}/${SOURCE}.s")
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${FILE}")
-    list(APPEND FILES ${FILE})
-  endif()
 endforeach()
 
 add_library(argparse ${FILES})
@@ -86,8 +80,8 @@ add_library(argparse::argparse ALIAS argparse)
 file(GLOB_RECURSE PUBLIC_INCLUDE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h)
 target_sources(argparse INTERFACE FILE_SET HEADERS BASE_DIRS include FILES ${PUBLIC_INCLUDE_FILES})
 
-target_include_directories(argparse PUBLIC)
-target_link_libraries(argparse PUBLIC)
+target_include_directories(argparse PUBLIC include)
+target_link_libraries(argparse PUBLIC lexical_cast::lexical_cast tuple::tuple)
 
 foreach(prog
     argparse0
