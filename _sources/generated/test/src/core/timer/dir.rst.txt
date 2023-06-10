@@ -1,0 +1,11 @@
+
+
+.. _test/src/core/timer:
+
+timer
+=========
+
+.. toctree::
+   :maxdepth: 1
+
+   test_timer_basic.cpp

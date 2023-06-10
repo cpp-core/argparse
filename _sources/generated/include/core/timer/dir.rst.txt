@@ -1,0 +1,11 @@
+
+
+.. _include/core/timer:
+
+timer
+=========
+
+.. toctree::
+   :maxdepth: 1
+
+   timer.h
