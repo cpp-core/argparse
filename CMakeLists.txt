@@ -56,8 +56,8 @@ message("-- argparse: docs ${ARGPARSE_DOCS}")
 
 # Add our dependencies
 #
-add_component(tuple)
-add_component(lexical_cast)
+add_repo(tuple)
+add_repo(lexical_cast)
 
 # Build the library
 #
