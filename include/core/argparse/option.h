@@ -6,7 +6,9 @@
 #include "base.h"
 #include "context.h"
 #include "error.h"
-#include "core/lexical_cast/lexical_cast.h"
+#include "core/lexical_cast/builtin.h"
+#include "core/lexical_cast/string.h"
+#include "core/lexical_cast/error.h"
 #include "core/mp/type_name.h"
 
 namespace core::argp
