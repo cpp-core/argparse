@@ -12,16 +12,25 @@ library supports standard library types such as `std::vector` and
 `std::map` out of the box and is easily extensible to user-defined
 types by leveraging the header-only `lexical_cast` library.
 
-The following code snippet demonstrats how to parse a simple flag.
+The following code snippet is a brief demonstration.
 
 ```c++
 int main(int argc, const char *argv[]) {
-	ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics"));
-	opts.parse(argc, argv);
-	auto verbose = opts.get<'v'>();
-	
+    ArgParse opts
+		(
+		argValues<'d', std::vector, int>("data", "User data"),
+		argFlag<'v'>("verbose", "Verbose diagnostics")
+		);
+    opts.parse(argc, argv);
+    auto data = opts.get<'d'>();
+    auto verbose = opts.get<'v'>();
+
     if (verbose) cout << "verbose option selected" << endl;
     else cout << "verbose option not selected" << endl;
+
+    cout << "data" << endl;
+	for (auto elem : data)
+		cout << elem << endl;
     return 0;
 }
 ```
