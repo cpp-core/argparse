@@ -28,11 +28,23 @@ int main(int argc, const char *argv[]) {
     if (verbose) cout << "verbose option selected" << endl;
     else cout << "verbose option not selected" << endl;
 
-    cout << "data" << endl;
+    cout << "data:" << endl;
 	for (auto elem : data)
-		cout << elem << endl;
+		cout << " " << elem;
     return 0;
 }
+```
+
+```
+> argparse1 --help
+program: argparse1 [options]
+    -d, --data int [int [...]]           User data
+    -v, --verbose                        Verbose diagnostics
+	
+> argparse1 -d 1 2 3 -v
+verbose option selected
+data: 1 2 3
+
 ```
 
 ## Tutorial

@@ -86,7 +86,7 @@ public:
     void output_help_message(std::ostream& os, const std::vector<std::string>& args)
     {
 	auto program_name = args.size() > 0 ? args[0] : "unknown program";
-	std::cout << "program: " << program_name << " [options]" << star_value_spec() << std::endl;
+	os << "program: " << program_name << " [options]" << star_value_spec() << std::endl;
 	auto printer = [&](const auto& arg)
 		       {
 			   static constexpr size_t Indent = 4;

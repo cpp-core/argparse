@@ -20,8 +20,8 @@ int main(int argc, const char *argv[]) {
     if (verbose) cout << "verbose option selected" << endl;
     else cout << "verbose option not selected" << endl;
 
-    cout << "data" << endl;
+    cout << "data:";
     for (auto elem : data)
-	cout << elem << endl;
+	cout << " " << elem;
     return 0;
 }
