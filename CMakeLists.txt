@@ -62,9 +62,9 @@ add_repo(lexical_cast)
 # Build the library
 #
 set(SOURCES
-  base
-  context
-  error
+  detail/base
+  detail/context
+  detail/error
   )
 
 set(FILES)

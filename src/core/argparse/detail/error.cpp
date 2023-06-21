@@ -2,8 +2,8 @@
 //
 
 #include <fmt/format.h>
-#include "core/argparse/error.h"
-#include "core/argparse/message.h"
+#include "core/argparse/detail/error.h"
+#include "core/argparse/detail/message.h"
 #include "core/mp/type_name.h"
 
 namespace core::argp

@@ -2,8 +2,8 @@
 //
 
 #pragma once
-#include "core/argparse/option.h"
-#include "core/argparse/parser.h"
+#include "detail/option.h"
+#include "detail/parser.h"
 
 namespace core::argp::interface {
 using core::argp::ArgParse;

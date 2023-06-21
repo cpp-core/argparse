@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <list>
 #include "core/argparse/argp.h"
-#include "core/argparse/message.h"
+#include "core/argparse/detail/message.h"
 
 using namespace core::argp::interface;
 namespace argp = core::argp;

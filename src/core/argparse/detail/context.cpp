@@ -1,7 +1,7 @@
 // Copyright (C) 2019, 2022, 2023 by Mark Melton
 //
 
-#include "core/argparse/context.h"
+#include "core/argparse/detail/context.h"
 
 namespace core::argp
 {
