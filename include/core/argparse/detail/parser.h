@@ -174,9 +174,9 @@ public:
 	return parse(args);
     }
 
-    bool parse_catch(const std::vector<std::string>& args) {
+    void parse_catch(const std::vector<std::string>& args) {
 	try {
-	    return parse(args);
+	    parse(args);
 	} catch (const std::exception& err) {
 	    std::cerr << "The following exception was caught by ArgParse:" << std::endl;
 	    std::cerr << err.what() << std::endl << std::endl;
@@ -192,12 +192,18 @@ public:
 	}
     }
 
-    bool parse_catch(int argc, const char *argv[])
+    void parse_catch(std::initializer_list<std::string> largs)
+    {
+	std::vector<std::string> args(largs.begin(), largs.end());
+	parse_catch(args);
+    }
+
+    void parse_catch(int argc, const char *argv[])
     {
 	std::vector<std::string> args;
 	for (size_t i = 0; i < size_t(argc); ++i)
 	    args.emplace_back(std::string(argv[i]));
-	return parse_catch(args);
+	parse_catch(args);
     }
 
 private:
