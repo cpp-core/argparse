@@ -4,6 +4,8 @@ find_package(Threads REQUIRED)
 
 set(TESTS
   argparse/basic
+  argparse/floating_with_suffix
+  argparse/integer_with_suffix
   )
 
 set(LIBRARIES

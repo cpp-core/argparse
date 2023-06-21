@@ -17,7 +17,7 @@ int main(int argc, const char *argv[]) {
 	 argValue<'f'>("floating", FloatingWithSuffix<double>{}, "Floating number"),
 	 argFlag<'v'>("verbose", "Verbose diagnostics")
 	 );
-    opts.parse(argc, argv);
+    opts.parse_catch(argc, argv);
     auto data = opts.get<'d'>();
     auto number = opts.get<'n'>();
     auto floating = opts.get<'f'>();

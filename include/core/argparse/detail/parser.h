@@ -150,7 +150,7 @@ public:
 	
 	return true;
     }
-
+    
     /// Parse the arguments.
     ///
     /// \param largs Arguments
@@ -173,7 +173,33 @@ public:
 	    args.emplace_back(std::string(argv[i]));
 	return parse(args);
     }
-    
+
+    bool parse_catch(const std::vector<std::string>& args) {
+	try {
+	    return parse(args);
+	} catch (const std::exception& err) {
+	    std::cerr << "The following exception was caught by ArgParse:" << std::endl;
+	    std::cerr << err.what() << std::endl << std::endl;
+	    std::cerr << "The orignal command line:" << std::endl;
+	    for (const auto& arg : args)
+		std::cerr << arg << " ";
+	    std::cerr << std::endl << std::endl;
+	    std::cerr << "The command help message:" << std::endl;
+	    output_help_message(std::cerr, args);
+	    std::cerr << std::endl;
+	    std::cerr << "Exiting program with a return code of -1" << std::endl;
+	    exit(-1);
+	}
+    }
+
+    bool parse_catch(int argc, const char *argv[])
+    {
+	std::vector<std::string> args;
+	for (size_t i = 0; i < size_t(argc); ++i)
+	    args.emplace_back(std::string(argv[i]));
+	return parse_catch(args);
+    }
+
 private:
     Tuple m_tuple;
     std::vector<std::string> m_extra;
