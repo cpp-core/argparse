@@ -49,11 +49,17 @@ data: 1 2 3
 
 ## Tutorial
 
-Basic `argparse` usage has three steps:
-- Construct an `ArgParse` object containing a description of the
-  available options.
-- Invoke `parse` or `parse_catch` to parse the given arguments
-- Use the `get` accessor to fetch individual values.
+The `argparse` library expresses the following opinions about command
+line options:
+- options are introduced in short form by a single dash, as in `-v`
+- options are introduced in long from by two dashes, as in `--verbose`
+- options can be combined in short form, as in `-xvz`
+- options take zero, one or more arguments
+
+Using `argparse` has three steps:
+- Construct an `ArgParse` object describing the options
+- Parse the arguments by invoking `parse` or `parse_catch`
+- Use the `get` accessor to fetch the parsed values.
 
 ### Describing Options
 
@@ -66,27 +72,42 @@ The first template parameter for each of these template functions is a
 non-type parameter of type `char` that represents the single character
 name of the option. A template parameter is used rather that a
 function argument to make compile-time checking more robust. Two
-options with the same single character name or attempting to `get` a
+options with the same single character name or invoking `get` with a
 non-existent option will be detected a compile-time and result in a
 compilation error.
 
 #### argFlag
 
-The `argFlag` methods construct an option that expects no
-arguments. The methods require a `long_name` and `description` for the
-option. The following snippet describes an option that can be invoked
-with either `-v` or `--verbose`.
-the presence of the option can be retrieved with the expression
-`opts.get<'v'>()`
+The `argFlag` methods construct options that expect no arguments and
+store an internal state of type `bool`. The methods all requires a
+single character template parameter for the short name and `long_name`
+and `description` arguments. Some methods also accept a functor that
+is invoked each time the option is recognized during parsing.
+
+The following snippet describes an option that can be invoked with
+either `-v` or `--verbose` and the presence of the option can be
+retrieved by invoking `get`.
 
 ```c++
-	argFlag<'v'>("--verbose", "Verbose diagnostics");
+    ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics"));
+	opts.parse(argc, argv);
+	auto verbose = opts.get<'v'>();
 ```
 
 #### argValue
 
-The `argValue` methods construct an option that expects exactly one
-argument.
+The `argValue` methods construct options that expect exactly one
+argument. The methods all require a single character template
+parameter for the short name and arguments for the long name and
+description.
+
+Some of the methods also take a defalt value which can be used to
+give an initial value to the option. If a default value is not
+specified, then the type must be specified as the second template
+parameter and the value of the option will be default constructed.
+
+Some of the methods also accept a functor that is invoked each time
+the option is recognized during parsing.
 
 #### argValues
 
