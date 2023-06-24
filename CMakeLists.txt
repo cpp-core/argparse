@@ -86,6 +86,8 @@ target_link_libraries(argparse PUBLIC lexical_cast::lexical_cast tuple::tuple)
 foreach(prog
     argparse0
     argparse1
+    argparse_flag
+    argparse_value
     )
   add_executable(${prog} src/tools/${prog}.cpp)
   target_link_libraries(${prog} argparse::argparse)
