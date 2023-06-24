@@ -88,6 +88,7 @@ foreach(prog
     argparse1
     argparse_flag
     argparse_value
+    argparse_values
     )
   add_executable(${prog} src/tools/${prog}.cpp)
   target_link_libraries(${prog} argparse::argparse)
