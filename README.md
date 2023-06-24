@@ -78,41 +78,66 @@ compilation error.
 
 #### argFlag
 
-The `argFlag` methods construct options that expect no arguments and
-store an internal state of type `bool`. The methods all requires a
-single character template parameter for the short name and `long_name`
-and `description` arguments. Some methods also accept a functor that
-is invoked each time the option is recognized during parsing.
-
-The following snippet describes an option that can be invoked with
-either `-v` or `--verbose` and the presence of the option can be
-retrieved by invoking `get`.
+The `argFlag` methods are used to construct an option that expect no
+arguments and stores an internal state of type `bool`. The most
+general `argFlag` method accepts the long name of the argument, a
+description and a functor that is invoked each time the option is
+encountered while parsing. The functor is optional.
 
 ```c++
-    ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics"));
+template<char C, class F>
+auto argFlag(std::string_view long_name, std::string_view description, F&& func = noop{});
+```
+
+The following snippet describes an option that can be invoked with
+either `-v` or `--verbose`, the presence of the option can be
+retrieved by invoking `get` and the number of occurrences can be
+retrieved by invoking `get_count`.
+
+```c++
+    int value{}
+    ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics", [&]() { value = 42; } ));
 	opts.parse(argc, argv);
 	auto verbose = opts.get<'v'>();
+	auto verbose_count = opts.get_count<'v'>();
 ```
+
+See the file [`argparse_flag.cpp`](src/tools/argparse_flag.cpp) for a complete example.
 
 #### argValue
 
-The `argValue` methods construct options that expect exactly one
-argument. The methods all require a single character template
-parameter for the short name and arguments for the long name and
-description.
+The `argValue` methods are used to construct an option that expects
+exactly one argument. The most general method accepts the long name of
+the argument, a default value, a description and a functor that is
+invoked with the option value each time the option is encountered
+while parsing. The default value an functor are optional.
 
-Some of the methods also take a defalt value which can be used to
-give an initial value to the option. If a default value is not
-specified, then the type must be specified as the second template
-parameter and the value of the option will be default constructed.
+```c++
+template<char C, class T, class F>
+auto argValue(std::string_view long_name, T default_value, std::string_view description, F&& func);
+```
 
-Some of the methods also accept a functor that is invoked each time
-the option is recognized during parsing.
+The following snippet describes an option that can be invoked with
+either `-d` or `--data`, the option value can be retrieved by invoking
+`get` and the number of occurrences can be retrieved by invoking
+`get_count`.
+
+```c++
+    int value{1};
+    ArgParse opts
+	(
+		argValue<'d'>("data", 42, "Data", [&](auto x) { value = 2 * x; })
+	 );
+    opts.parse(argc, argv);
+    auto data = opts.get<'d'>();
+    auto data_count = opts.get_count<'d'>();
+```
+
+See the file [`argparse_value.cpp`](src/tools/argparse_value.cpp) for a complete example.
 
 #### argValues
 
-The `argValues` methods construct an option that expects zero or more
-arguments.
+See the file [`argparse_values.cpp`](src/tools/argparse_values.cpp) for a complete example.
 
 ### Parsing Arguments
 
