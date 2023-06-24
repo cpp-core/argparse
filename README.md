@@ -1,8 +1,9 @@
 [![Build](https://github.com/cpp-core/argparse/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/argparse/actions/workflows/build.yaml)
 
-# Ergomomic, Type-Safe Argument Parsing
+Ergomomic, Type-Safe Argument Parsing
+=====================================
 
-## Motivation
+# Motivation
 
 Parsing command line arguments is a ubiqitous task, but unlike other
 modern languages, `C++` has no standard library support for it. The
@@ -47,7 +48,7 @@ data: 1 2 3
 
 ```
 
-## Tutorial
+# Tutorial
 
 The `argparse` library expresses the following opinions about command
 line options:
@@ -61,7 +62,7 @@ Using `argparse` has three steps:
 - Parse the arguments by invoking `parse` or `parse_catch`
 - Use the `get` accessor to fetch the parsed values.
 
-### Describing Options
+## Describing Options
 
 The `argparse` library provides three option flavors: zero argument,
 exactly one argument, and zero or more arguments. These options are
@@ -76,7 +77,7 @@ options with the same single character name or invoking `get` with a
 non-existent option will be detected a compile-time and result in a
 compilation error.
 
-#### argFlag
+### argFlag
 
 The `argFlag` methods are used to construct an option that expect no
 arguments and stores an internal state of type `bool`. The most
@@ -104,7 +105,7 @@ retrieved by invoking `get_count`.
 
 See the file [`argparse_flag.cpp`](src/tools/argparse_flag.cpp) for a complete example.
 
-#### argValue
+### argValue
 
 The `argValue` methods are used to construct an option that expects
 exactly one argument. The most general method accepts the long name of
@@ -124,10 +125,7 @@ either `-d` or `--data`, the option value can be retrieved by invoking
 
 ```c++
     int value{1};
-    ArgParse opts
-	(
-		argValue<'d'>("data", 42, "Data", [&](auto x) { value = 2 * x; })
-	 );
+    ArgParse opts(argValue<'d'>("data", 42, "Data", [&](auto x) { value = 2 * x; }));
     opts.parse(argc, argv);
     auto data = opts.get<'d'>();
     auto data_count = opts.get_count<'d'>();
@@ -135,11 +133,32 @@ either `-d` or `--data`, the option value can be retrieved by invoking
 
 See the file [`argparse_value.cpp`](src/tools/argparse_value.cpp) for a complete example.
 
-#### argValues
+### argValues
+
+The `argValues` methods are used to construct an option that expects
+zero or more arguments. The most general method accepts the long name
+of the argument, a description, the minimum number of option values,
+the maximum number of option values and a single argument callback
+that is called with each option value as they are parsed. The short
+name, container and element type must all be supplied as template
+function parameters. The minimum and maximum number of option values
+are optional as is the callback.
+
+
+The following snippet describes an option that can be invoked with
+either `-d` or `--data` and the option values can be retrived using
+`get`.
+
+```c++
+    int s{};
+	ArgParse opts(argValues<'d', std::vector, int>("data", "Data"), 2, 4, [&](auto x) { s += x; });
+	opts.parse(argc, argv);
+    auto data = opts.get<'d'>();
+```
 
 See the file [`argparse_values.cpp`](src/tools/argparse_values.cpp) for a complete example.
 
-### Parsing Arguments
+## Parsing Arguments
 
-### Getting Parsed Values
+## Getting Parsed Values
 
