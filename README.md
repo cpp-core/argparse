@@ -50,8 +50,8 @@ data: 1 2 3
 
 # Tutorial
 
-The `argparse` library expresses the following opinions about command
-line options:
+The `argparse` library has the following opinions about command line
+options:
 - options are introduced in short form by a single dash, as in `-v`
 - options are introduced in long from by two dashes, as in `--verbose`
 - options can be combined in short form, as in `-xvz`
@@ -72,10 +72,9 @@ functions respectively.
 The first template parameter for each of these template functions is a
 non-type parameter of type `char` that represents the single character
 name of the option. A template parameter is used rather that a
-function argument to make compile-time checking more robust. Two
-options with the same single character name or invoking `get` with a
-non-existent option will be detected a compile-time and result in a
-compilation error.
+function argument to make compile-time checking more robust. Creating
+two options with the same short name or invoking `get` with a
+non-existent short name will result in a compilation error.
 
 ### argFlag
 
@@ -160,5 +159,24 @@ See the file [`argparse_values.cpp`](src/tools/argparse_values.cpp) for a comple
 
 ## Parsing Arguments
 
+The two basic parsing methods are `parse` and `parse_catch`. Each
+method can take either an initializer list or `argc` and `argv`
+directly. The `parse` methods will throw an exception describing the
+problem if the arguments cannot be parsed. Instead of throwing an
+exception, the `parse_catch` methods will write a description of the
+problem to `std::cerr` and exit with a negative status code.
+
+```c++
+bool parse(std::initializer_list<std::string> args);
+bool parse(int argc, const char *argv[]);
+
+void parse_catch(std::initializer_list<std::string> args);
+void parse_catch(int argc, const char *argv[]);
+```
+
 ## Getting Parsed Values
+
+The value of an option can be retrieved by calling the `get` accessor
+of the `ArgParse` object and passing the short name as the template
+parameter.
 
