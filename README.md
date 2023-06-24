@@ -97,9 +97,9 @@ retrieved by invoking `get_count`.
 ```c++
     int value{}
     ArgParse opts(argFlag<'v'>("verbose", "Verbose diagnostics", [&]() { value = 42; } ));
-	opts.parse(argc, argv);
-	auto verbose = opts.get<'v'>();
-	auto verbose_count = opts.get_count<'v'>();
+    opts.parse(argc, argv);
+    auto verbose = opts.get<'v'>();
+    auto verbose_count = opts.get_count<'v'>();
 ```
 
 See the file [`argparse_flag.cpp`](src/tools/argparse_flag.cpp) for a complete example.
