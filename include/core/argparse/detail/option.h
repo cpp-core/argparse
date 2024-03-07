@@ -1,4 +1,4 @@
-// Copyright (C) 2019, 2021, 2022, 2023 by Mark Melton
+// Copyright (C) 2019, 2021, 2022, 2023, 2024 by Mark Melton
 //
 
 #pragma once
@@ -8,6 +8,7 @@
 #include "error.h"
 #include "core/lexical_cast/builtin.h"
 #include "core/lexical_cast/string.h"
+#include "core/lexical_cast/optional.h"
 #include "core/lexical_cast/error.h"
 #include "core/mp/type_name.h"
 

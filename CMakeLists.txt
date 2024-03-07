@@ -87,6 +87,7 @@ foreach(prog
     argparse0
     argparse1
     argparse_flag
+    argparse_optional
     argparse_value
     argparse_values
     )
